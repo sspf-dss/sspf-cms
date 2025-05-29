@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "courses",
+  "info": {
+    "singularName": "course",
+    "pluralName": "courses",
+    "displayName": "Course",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "fee": {
+      "type": "integer"
+    },
+    "isFull": {
+      "type": "boolean"
+    },
+    "openRegisterDate": {
+      "type": "date"
+    },
+    "endRegisterDate": {
+      "type": "date"
+    },
+    "participantNumber": {
+      "type": "integer"
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "instructors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::instructor.instructor"
+    }
+  }
+}

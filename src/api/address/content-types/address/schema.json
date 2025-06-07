@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Address"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "line1": {
+      "type": "string"
+    },
+    "line2": {
+      "type": "string"
+    },
+    "taxId": {
+      "type": "string"
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "contaceName": {
+      "type": "string"
+    },
+    "subDistrice": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "addresses"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

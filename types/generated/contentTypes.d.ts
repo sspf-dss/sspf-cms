@@ -373,6 +373,83 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
+  collectionName: 'addresses';
+  info: {
+    displayName: 'Address';
+    pluralName: 'addresses';
+    singularName: 'address';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    companyName: Schema.Attribute.String;
+    contaceName: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    district: Schema.Attribute.String;
+    line1: Schema.Attribute.String;
+    line2: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::address.address'
+    > &
+      Schema.Attribute.Private;
+    province: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    subDistrice: Schema.Attribute.String;
+    taxId: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    zip: Schema.Attribute.String;
+  };
+}
+
+export interface ApiCourseInfoCourseInfo extends Struct.CollectionTypeSchema {
+  collectionName: 'course_infos';
+  info: {
+    displayName: 'CourseInfo';
+    pluralName: 'course-infos';
+    singularName: 'course-info';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    descriptionMD: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-info.course-info'
+    > &
+      Schema.Attribute.Private;
+    objective: Schema.Attribute.Blocks;
+    objectiveMD: Schema.Attribute.RichText;
+    outline: Schema.Attribute.Blocks;
+    outlineMD: Schema.Attribute.RichText;
+    publishedAt: Schema.Attribute.DateTime;
+    requirement: Schema.Attribute.Blocks;
+    requirementMD: Schema.Attribute.RichText;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
@@ -385,6 +462,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    course_info: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::course-info.course-info'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -396,6 +477,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::instructor.instructor'
     >;
     isFull: Schema.Attribute.Boolean;
+    isOnline: Schema.Attribute.Boolean;
     isOpen: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -407,10 +489,16 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     openRegisterDate: Schema.Attribute.Date;
     participantNumber: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
+    registrations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::registration.registration'
+    >;
     startDate: Schema.Attribute.Date;
+    topBanner: Schema.Attribute.Media<'images' | 'files'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    venue: Schema.Attribute.String;
   };
 }
 
@@ -449,6 +537,51 @@ export interface ApiInstructorInstructor extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRegistrationRegistration
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'registrations';
+  info: {
+    displayName: 'Registration';
+    pluralName: 'registrations';
+    singularName: 'registration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    course: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::registration.registration'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    receipt: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    registerDate: Schema.Attribute.DateTime;
+    registerStatus: Schema.Attribute.Enumeration<
+      [
+        'REGISTERED',
+        'PAYMENT_PENDING',
+        'PAYMENT_RECEIVED',
+        'ENROLLED',
+        'WAIT_LIST',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    uploads: Schema.Attribute.Media<'images' | 'files', true>;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -907,9 +1040,9 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    addresses: Schema.Attribute.Relation<'oneToMany', 'api::address.address'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -961,8 +1094,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::address.address': ApiAddressAddress;
+      'api::course-info.course-info': ApiCourseInfoCourseInfo;
       'api::course.course': ApiCourseCourse;
       'api::instructor.instructor': ApiInstructorInstructor;
+      'api::registration.registration': ApiRegistrationRegistration;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

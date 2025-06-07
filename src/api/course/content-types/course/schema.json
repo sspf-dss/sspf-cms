@@ -10,6 +10,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -43,6 +44,32 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::instructor.instructor"
+    },
+    "registrations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::registration.registration",
+      "mappedBy": "course"
+    },
+    "course_info": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course-info.course-info",
+      "mappedBy": "course"
+    },
+    "isOnline": {
+      "type": "boolean"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "topBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
     }
   }
 }

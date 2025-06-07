@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_infos",
+  "info": {
+    "singularName": "course-info",
+    "pluralName": "course-infos",
+    "displayName": "CourseInfo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "course": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course",
+      "inversedBy": "course_info"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "objective": {
+      "type": "blocks"
+    },
+    "requirement": {
+      "type": "blocks"
+    },
+    "outline": {
+      "type": "blocks"
+    },
+    "descriptionMD": {
+      "type": "richtext"
+    },
+    "objectiveMD": {
+      "type": "richtext"
+    },
+    "requirementMD": {
+      "type": "richtext"
+    },
+    "outlineMD": {
+      "type": "richtext"
+    }
+  }
+}

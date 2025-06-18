@@ -70,7 +70,13 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::address.address",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
+    },
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

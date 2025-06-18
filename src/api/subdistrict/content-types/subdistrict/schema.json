@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "subdistricts",
+  "info": {
+    "singularName": "subdistrict",
+    "pluralName": "subdistricts",
+    "displayName": "Subdistrict"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "integer"
+    },
+    "nameTh": {
+      "type": "string"
+    },
+    "nameEn": {
+      "type": "string"
+    },
+    "district": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::district.district",
+      "inversedBy": "subdistricts"
+    }
+  }
+}

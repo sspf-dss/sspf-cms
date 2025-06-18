@@ -385,11 +385,11 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
   };
   attributes: {
     companyName: Schema.Attribute.String;
-    contaceName: Schema.Attribute.String;
+    contactName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    district: Schema.Attribute.String;
+    district: Schema.Attribute.Relation<'oneToOne', 'api::district.district'>;
     line1: Schema.Attribute.String;
     line2: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -398,15 +398,18 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
       'api::address.address'
     > &
       Schema.Attribute.Private;
-    province: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    province: Schema.Attribute.Relation<'oneToOne', 'api::province.province'>;
     publishedAt: Schema.Attribute.DateTime;
-    subDistrice: Schema.Attribute.String;
+    subdistrict: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::subdistrict.subdistrict'
+    >;
     taxId: Schema.Attribute.String;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
+    user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
@@ -502,6 +505,41 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDistrictDistrict extends Struct.CollectionTypeSchema {
+  collectionName: 'districts';
+  info: {
+    displayName: 'District';
+    pluralName: 'districts';
+    singularName: 'district';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::district.district'
+    > &
+      Schema.Attribute.Private;
+    nameEn: Schema.Attribute.String;
+    nameTh: Schema.Attribute.String;
+    province: Schema.Attribute.Relation<'manyToOne', 'api::province.province'>;
+    publishedAt: Schema.Attribute.DateTime;
+    subdistricts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subdistrict.subdistrict'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiInstructorInstructor extends Struct.CollectionTypeSchema {
   collectionName: 'instructors';
   info: {
@@ -540,6 +578,37 @@ export interface ApiInstructorInstructor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProvinceProvince extends Struct.CollectionTypeSchema {
+  collectionName: 'provinces';
+  info: {
+    displayName: 'Province';
+    pluralName: 'provinces';
+    singularName: 'province';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    districts: Schema.Attribute.Relation<'oneToMany', 'api::district.district'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::province.province'
+    > &
+      Schema.Attribute.Private;
+    nameEn: Schema.Attribute.String;
+    nameTh: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRegistrationRegistration
   extends Struct.CollectionTypeSchema {
   collectionName: 'registrations';
@@ -552,18 +621,29 @@ export interface ApiRegistrationRegistration
     draftAndPublish: true;
   };
   attributes: {
+    certificateAddress: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::address.address'
+    >;
     course: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::registration.registration'
     > &
       Schema.Attribute.Private;
+    nameOnCertificate: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     receipt: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    receiptAddress: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::address.address'
+    >;
     registerDate: Schema.Attribute.DateTime;
     registerStatus: Schema.Attribute.Enumeration<
       [
@@ -574,6 +654,7 @@ export interface ApiRegistrationRegistration
         'WAIT_LIST',
       ]
     >;
+    remark: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -582,6 +663,37 @@ export interface ApiRegistrationRegistration
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+  };
+}
+
+export interface ApiSubdistrictSubdistrict extends Struct.CollectionTypeSchema {
+  collectionName: 'subdistricts';
+  info: {
+    displayName: 'Subdistrict';
+    pluralName: 'subdistricts';
+    singularName: 'subdistrict';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    district: Schema.Attribute.Relation<'manyToOne', 'api::district.district'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subdistrict.subdistrict'
+    > &
+      Schema.Attribute.Private;
+    nameEn: Schema.Attribute.String;
+    nameTh: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1060,11 +1172,13 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.String;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1097,8 +1211,11 @@ declare module '@strapi/strapi' {
       'api::address.address': ApiAddressAddress;
       'api::course-info.course-info': ApiCourseInfoCourseInfo;
       'api::course.course': ApiCourseCourse;
+      'api::district.district': ApiDistrictDistrict;
       'api::instructor.instructor': ApiInstructorInstructor;
+      'api::province.province': ApiProvinceProvince;
       'api::registration.registration': ApiRegistrationRegistration;
+      'api::subdistrict.subdistrict': ApiSubdistrictSubdistrict;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

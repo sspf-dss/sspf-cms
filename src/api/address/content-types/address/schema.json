@@ -11,41 +11,47 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "companyName": {
+      "type": "string"
+    },
+    "contactName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "taxId": {
+      "type": "string"
+    },
     "line1": {
       "type": "string"
     },
     "line2": {
       "type": "string"
     },
-    "taxId": {
-      "type": "string"
-    },
-    "companyName": {
-      "type": "string"
-    },
-    "contaceName": {
-      "type": "string"
-    },
-    "subDistrice": {
-      "type": "string"
-    },
-    "district": {
-      "type": "string"
-    },
-    "province": {
-      "type": "string"
-    },
     "zip": {
       "type": "string"
     },
-    "users_permissions_user": {
+    "province": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::province.province"
+    },
+    "district": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::district.district"
+    },
+    "subdistrict": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subdistrict.subdistrict"
+    },
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "addresses"
-    },
-    "title": {
-      "type": "string"
     }
   }
 }

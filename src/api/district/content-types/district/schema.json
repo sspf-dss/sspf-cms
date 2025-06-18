@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "districts",
+  "info": {
+    "singularName": "district",
+    "pluralName": "districts",
+    "displayName": "District"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "integer"
+    },
+    "nameTh": {
+      "type": "string"
+    },
+    "nameEn": {
+      "type": "string"
+    },
+    "province": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::province.province",
+      "inversedBy": "districts"
+    },
+    "subdistricts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subdistrict.subdistrict",
+      "mappedBy": "district"
+    }
+  }
+}

@@ -22,6 +22,15 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
+    "nameOnCertificate": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
     "registerDate": {
       "type": "datetime"
     },
@@ -52,6 +61,19 @@
         "videos",
         "audios"
       ]
+    },
+    "receiptAddress": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::address.address"
+    },
+    "certificateAddress": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::address.address"
+    },
+    "remark": {
+      "type": "text"
     }
   }
 }

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/sspf-dss/sspf-cms/compare/v0.2.1...v0.2.2) (2025-07-02)
+
+
+### Bug Fixes
+
+* comment firestor related ([cc6e0ec](https://github.com/sspf-dss/sspf-cms/commit/cc6e0ecd4a680799badc17696dc12a8d4d45b119))
+
 ### [0.2.1](https://github.com/sspf-dss/sspf-cms/compare/v0.2.0...v0.2.1) (2025-07-02)
 
 

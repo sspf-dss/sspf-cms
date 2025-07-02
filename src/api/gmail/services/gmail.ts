@@ -6,7 +6,7 @@ import { error } from "console";
 import { google } from "googleapis";
 import { SendMailOptions, SentMessageInfo } from "nodemailer";
 import nodemailer from "nodemailer";
-import { FieldValue, firestore } from "../../../utils/firebase";
+// import { FieldValue, firestore } from "../../../utils/firebase";
 
 const {
     GMAIL_USER,
@@ -85,13 +85,13 @@ export default ({ strapi }: { strapi: any }) => ({
             attachments,
         };
 
-        const doc = await firestore.collection("notifications").add({
-            title: "title",
-            message: "message",
-            createdAt: FieldValue.serverTimestamp(),
-            target: "all",
-            readBy: [],
-        });
+        // const doc = await firestore.collection("notifications").add({
+        //     title: "title",
+        //     message: "message",
+        //     createdAt: FieldValue.serverTimestamp(),
+        //     target: "all",
+        //     readBy: [],
+        // });
 
         strapi.log.debug("doc.id: " + doc.id);
 

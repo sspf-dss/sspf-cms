@@ -93,7 +93,7 @@ export default ({ strapi }: { strapi: any }) => ({
         //     readBy: [],
         // });
 
-        strapi.log.debug("doc.id: " + doc.id);
+        // strapi.log.debug("doc.id: " + doc.id);
 
         return transport.sendMail(mailOptions);
     },

@@ -1,3 +1,5 @@
+import { metastore } from "googleapis/build/src/apis/metastore";
+import { path } from "lodash/fp";
 import { authPlugins } from "mysql2";
 import { config } from "process";
 
@@ -16,6 +18,14 @@ export default {
             method: "POST",
             path: "/registrations/waitlist",
             handler: "api::registration.registration.createWaitlist",
+            config: {
+                auth: false,
+            },
+        },
+        {
+            method: "POST",
+            path: "/registration/:registration_document_id/uploadReceipt",
+            handler: "api::registration.registration.uploadReceipt",
             config: {
                 auth: false,
             },

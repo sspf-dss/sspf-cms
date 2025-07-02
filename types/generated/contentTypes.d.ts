@@ -666,6 +666,39 @@ export interface ApiRegistrationRegistration
   };
 }
 
+export interface ApiReportTemplateReportTemplate
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'report_templates';
+  info: {
+    displayName: 'ReportTemplate';
+    pluralName: 'report-templates';
+    singularName: 'report-template';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cssStyles: Schema.Attribute.Text;
+    description: Schema.Attribute.Text;
+    htmlTemplate: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::report-template.report-template'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    variables: Schema.Attribute.JSON;
+  };
+}
+
 export interface ApiSubdistrictSubdistrict extends Struct.CollectionTypeSchema {
   collectionName: 'subdistricts';
   info: {
@@ -1215,6 +1248,7 @@ declare module '@strapi/strapi' {
       'api::instructor.instructor': ApiInstructorInstructor;
       'api::province.province': ApiProvinceProvince;
       'api::registration.registration': ApiRegistrationRegistration;
+      'api::report-template.report-template': ApiReportTemplateReportTemplate;
       'api::subdistrict.subdistrict': ApiSubdistrictSubdistrict;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

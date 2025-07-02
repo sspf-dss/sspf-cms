@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "report_templates",
+  "info": {
+    "singularName": "report-template",
+    "pluralName": "report-templates",
+    "displayName": "ReportTemplate"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "htmlTemplate": {
+      "type": "text"
+    },
+    "cssStyles": {
+      "type": "text"
+    },
+    "variables": {
+      "type": "json"
+    }
+  }
+}

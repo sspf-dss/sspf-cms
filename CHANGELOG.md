@@ -2,4 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/sspf-dss/sspf-cms/compare/v0.1.1...v0.2.0) (2025-07-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **email for invoice:** .env must provide google authentication / ReportTemplate must include name:
+email_invoice
+
+### Features
+
+* **email for invoice:** adding new Schema for ReportTemplate and sending email when upload invoice ([0a23248](https://github.com/sspf-dss/sspf-cms/commit/0a2324887ed90681378e2a3cae6920372d6b2bc0))
+* **strapi:** update Strapi to 5.16.0 ([f633741](https://github.com/sspf-dss/sspf-cms/commit/f6337417987db5650cf963f7186727412d888c17))
+
 ### 0.1.1 (2025-06-20)

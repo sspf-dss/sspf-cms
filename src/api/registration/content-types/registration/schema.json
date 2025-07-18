@@ -41,7 +41,8 @@
         "PAYMENT_PENDING",
         "PAYMENT_RECEIVED",
         "ENROLLED",
-        "WAIT_LIST"
+        "WAIT_LIST",
+        "CANCELLED"
       ]
     },
     "uploads": {

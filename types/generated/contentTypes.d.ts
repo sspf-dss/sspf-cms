@@ -652,6 +652,7 @@ export interface ApiRegistrationRegistration
         'PAYMENT_RECEIVED',
         'ENROLLED',
         'WAIT_LIST',
+        'CANCELLED',
       ]
     >;
     remark: Schema.Attribute.Text;

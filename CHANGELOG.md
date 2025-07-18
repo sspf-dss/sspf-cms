@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/sspf-dss/sspf-cms/compare/v0.2.2...v0.2.3) (2025-07-18)
+
+
+### Features
+
+* **add cancelled registerstatus:** add CANCELLED RegisterStatus and Update Strapi to 5.18.1 ([c815e63](https://github.com/sspf-dss/sspf-cms/commit/c815e636deede33c610a3f6615ce0d3a02bb77b2))
+
 ### [0.2.2](https://github.com/sspf-dss/sspf-cms/compare/v0.2.1...v0.2.2) (2025-07-02)
 
 

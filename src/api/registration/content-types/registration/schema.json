@@ -42,6 +42,7 @@
         "PAYMENT_RECEIVED",
         "ENROLLED",
         "WAIT_LIST",
+        "WAIT_LIST_OPEN",
         "CANCELLED"
       ]
     },
@@ -74,6 +75,21 @@
       "target": "api::address.address"
     },
     "remark": {
+      "type": "text"
+    },
+    "foodOption": {
+      "type": "enumeration",
+      "enum": [
+        "GENERAL",
+        "MUSLIM",
+        "VEGETARIAN",
+        "OTHER"
+      ]
+    },
+    "foodOptionOther": {
+      "type": "text"
+    },
+    "foodAllergyDetail": {
       "type": "text"
     }
   }

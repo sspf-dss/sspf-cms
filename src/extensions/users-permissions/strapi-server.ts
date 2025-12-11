@@ -43,9 +43,9 @@ export default (plugin) => {
     // Extend the plugin routes if needed - routes should be an array, not an object
     // plugin.routes["content-api"].routes = [...customRoutes, ...routes];
 
-    strapi.log.debug(
-        `JSON.stringify: ${JSON.stringify(plugin.routes["content-api"].routes)}`
-    );
+    // strapi.log.debug(
+    //     `JSON.stringify: ${JSON.stringify(plugin.routes["content-api"].routes)}`
+    // );
 
     return plugin;
 };

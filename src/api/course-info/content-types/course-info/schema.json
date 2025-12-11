@@ -17,18 +17,6 @@
       "target": "api::course.course",
       "inversedBy": "course_info"
     },
-    "description": {
-      "type": "blocks"
-    },
-    "objective": {
-      "type": "blocks"
-    },
-    "requirement": {
-      "type": "blocks"
-    },
-    "outline": {
-      "type": "blocks"
-    },
     "descriptionMD": {
       "type": "richtext"
     },

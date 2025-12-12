@@ -22,9 +22,9 @@
     "publish-if-needed": "echo 'skip npm publish for Angular app'"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.31.3",
-    "@strapi/plugin-users-permissions": "5.31.3",
-    "@strapi/strapi": "5.31.3",
+    "@strapi/plugin-cloud": "5.32.0",
+    "@strapi/plugin-users-permissions": "5.32.0",
+    "@strapi/strapi": "5.32.0",
     "firebase-admin": "^13.4.0",
     "googleapis": "^150.0.1",
     "handlebars": "^4.7.8",

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/sspf-dss/sspf-cms/compare/v0.3.0...v0.4.0) (2025-12-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* 
+
+### Bug Fixes
+
+* update strapi to 5.32.0 ([382c632](https://github.com/sspf-dss/sspf-cms/commit/382c6328953dc1467ba094f83b40f7b762af9b50))
+
 ## [0.3.0](https://github.com/sspf-dss/sspf-cms/compare/v0.2.3...v0.3.0) (2025-12-12)
 
 

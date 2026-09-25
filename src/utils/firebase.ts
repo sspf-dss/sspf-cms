@@ -1,11 +1,13 @@
-import * as admin from "firebase-admin";
+import { applicationDefault, getApps, initializeApp } from "firebase-admin/app";
+import { FieldValue, getFirestore } from "firebase-admin/firestore";
+import { getMessaging } from "firebase-admin/messaging";
 
-if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.applicationDefault(),
+if (!getApps().length) {
+    initializeApp({
+        credential: applicationDefault(),
     });
 }
 
-export const firestore = admin.firestore();
-export const messaging = admin.messaging();
-export const FieldValue = admin.firestore.FieldValue;
+export const firestore = getFirestore();
+export const messaging = getMessaging();
+export { FieldValue };

@@ -1,5 +1,34 @@
 # 🚀 Getting started with Strapi
 
+## Requirements
+
+- **Node.js 22.12 – 24.x** (required by puppeteer 25 and firebase-admin 14)
+- Strapi **5.55.1**, MySQL 8.4
+
+## 🐳 Docker
+
+The image is built on `node:22-bookworm-slim` and uses the system Chromium
+(`PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium`) for PDF generation.
+
+```
+docker compose build strapi
+docker compose up -d
+```
+
+## Upgrading
+
+Use the Strapi upgrade tool rather than editing versions by hand:
+
+```
+npx @strapi/upgrade minor
+```
+
+Do **not** run `npm audit fix --force` — npm's suggested "fix" for the
+remaining advisories is a downgrade to Strapi 4. The advisories still listed
+by `npm audit` come from dependencies pinned inside Strapi itself
+(`qs`, `vite`, `esbuild`, `sharp`, `stream-json`, `react-router`, ...) and
+are resolved by upstream Strapi releases.
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`

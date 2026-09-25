@@ -108,7 +108,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
             </html>
           `;
 
-            await page.setContent(fullHtml, { waitUntil: "networkidle0" });
+            await page.setContent(fullHtml, { waitUntil: "load" });
+            await page.waitForNetworkIdle();
             const pdfUint8Array = await page.pdf(pdfOptions);
             return Buffer.from(pdfUint8Array);
 

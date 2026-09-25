@@ -22,16 +22,16 @@
     "publish-if-needed": "echo 'skip npm publish for Angular app'"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.54.0",
-    "@strapi/plugin-users-permissions": "5.54.0",
-    "@strapi/strapi": "5.54.0",
-    "firebase-admin": "^13.4.0",
+    "@strapi/plugin-cloud": "5.55.1",
+    "@strapi/plugin-users-permissions": "5.55.1",
+    "@strapi/strapi": "5.55.1",
+    "firebase-admin": "^14.5.0",
     "googleapis": "^150.0.1",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
-    "mysql2": "3.9.8",
-    "nodemailer": "^7.0.3",
-    "puppeteer": "^24.10.2",
+    "mysql2": "3.24.4",
+    "nodemailer": "^10.0.10",
+    "puppeteer": "^25.12.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
@@ -49,7 +49,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=18.0.0 <=22.x.x",
+    "node": ">=22.12.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {

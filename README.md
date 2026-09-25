@@ -15,6 +15,55 @@ docker compose build strapi
 docker compose up -d
 ```
 
+## 📄 Public site pages
+
+The static pages of the public site (sspf-public) are Strapi single types,
+editable in the admin panel:
+
+| Single type           | API endpoint                    | Components                  |
+| --------------------- | ------------------------------- | --------------------------- |
+| Home Page             | `GET /api/home-page`            | –                           |
+| About Page            | `GET /api/about-page`           | `shared.timeline-item`      |
+| Activities Page       | `GET /api/activities-page`      | `shared.feature`            |
+| Contact Page          | `GET /api/contact-page`         | `shared.contact-person`     |
+| Executive Committee   | `GET /api/executive-committee`  | `shared.member`             |
+
+Pass `?populate=*` to include media and components.
+
+On every boot, [src/bootstrap/static-pages.ts](src/bootstrap/static-pages.ts):
+
+- grants the **Public** role `find` on these five single types, and
+- seeds any page that has no document yet with the content the Angular app
+  used to hard-code, published. Hero/banner images are downloaded from
+  Unsplash into the media library; if a download fails the page is seeded
+  without it.
+
+Existing content is never overwritten, so editors own it after the first boot.
+To reset a page to the seed, delete its document and restart.
+
+## 🔐 Keycloak
+
+Set `KEYCLOAK_ISSUER` (must equal the token's `iss`, e.g.
+`https://sso.example.com/realms/sspf`) and optionally `KEYCLOAK_CLIENT_ID`
+(only tokens whose `azp` matches are accepted). The `global::keycloak-user`
+policy verifies the `Authorization: Bearer <keycloak access token>` header
+against the realm's JWKS and exposes the subject as `ctx.state.keycloakSub`.
+
+| Endpoint                          | Purpose                                                        |
+| --------------------------------- | -------------------------------------------------------------- |
+| `POST /api/auth/keycloak/exchange`| Exchange a Keycloak access token for a Strapi JWT + user      |
+| `GET /api/user-preferences/me`    | Read the caller's admin-app UI preferences (`{ data: { prefs } }`) |
+| `PUT /api/user-preferences/me`    | Save them; body `{ data: { prefs: { ... } } }`, max 10 000 chars |
+
+`/auth/keycloak/exchange` replaces `GET /api/auth/keycloak/callback?access_token=...`,
+which Strapi ≥ 5.55 only accepts after its own `/connect/keycloak` redirect
+flow. It requires the Keycloak provider to be enabled under
+*Settings → Users & Permissions → Providers* and honours its
+registration settings.
+
+User preferences are keyed by Keycloak subject. Only the `/me` routes exist,
+so API tokens cannot list or edit other users' preferences.
+
 ## Upgrading
 
 Use the Strapi upgrade tool rather than editing versions by hand:

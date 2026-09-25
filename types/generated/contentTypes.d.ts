@@ -26,6 +26,11 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         minLength: 1;
       }>;
+    adminPermissions: Schema.Attribute.Relation<
+      'oneToMany',
+      'admin::permission'
+    >;
+    adminUserOwner: Schema.Attribute.Relation<'manyToOne', 'admin::user'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -39,6 +44,9 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }>;
     expiresAt: Schema.Attribute.DateTime;
+    kind: Schema.Attribute.Enumeration<['content-api', 'admin']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'content-api'>;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -56,7 +64,6 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['read-only', 'full-access', 'custom']> &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'read-only'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -134,6 +141,7 @@ export interface AdminPermission extends Struct.CollectionTypeSchema {
         minLength: 1;
       }>;
     actionParameters: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
+    apiToken: Schema.Attribute.Relation<'manyToOne', 'admin::api-token'>;
     conditions: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -241,6 +249,7 @@ export interface AdminSession extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'admin::session'> &
       Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON & Schema.Attribute.Private;
     origin: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Private;
@@ -385,6 +394,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    apiTokens: Schema.Attribute.Relation<'oneToMany', 'admin::api-token'> &
+      Schema.Attribute.Private;
     blocked: Schema.Attribute.Boolean &
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<false>;
@@ -421,12 +432,81 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     registrationToken: Schema.Attribute.String & Schema.Attribute.Private;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
+    resetPasswordTokenExpiresAt: Schema.Attribute.DateTime &
+      Schema.Attribute.Private;
     roles: Schema.Attribute.Relation<'manyToMany', 'admin::role'> &
       Schema.Attribute.Private;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     username: Schema.Attribute.String;
+  };
+}
+
+export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
+  collectionName: 'about_pages';
+  info: {
+    description: 'Content of the public site about-us page';
+    displayName: 'About Page';
+    pluralName: 'about-pages';
+    singularName: 'about-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bodyMD: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaBodyMD: Schema.Attribute.RichText;
+    ctaTitle: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-page.about-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    timeline: Schema.Attribute.Component<'shared.timeline-item', true>;
+    title: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiActivitiesPageActivitiesPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'activities_pages';
+  info: {
+    description: 'Content of the public site activities page';
+    displayName: 'Activities Page';
+    pluralName: 'activities-pages';
+    singularName: 'activities-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    eyebrow: Schema.Attribute.String;
+    intro: Schema.Attribute.Text;
+    items: Schema.Attribute.Component<'shared.feature', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::activities-page.activities-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -471,6 +551,42 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     zip: Schema.Attribute.String;
+  };
+}
+
+export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
+  collectionName: 'contact_pages';
+  info: {
+    description: 'Content of the public site contact page';
+    displayName: 'Contact Page';
+    pluralName: 'contact-pages';
+    singularName: 'contact-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    addressTitle: Schema.Attribute.String;
+    contacts: Schema.Attribute.Component<'shared.contact-person', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    intro: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-page.contact-page'
+    > &
+      Schema.Attribute.Private;
+    mapEmbedUrl: Schema.Attribute.String;
+    officeName: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    taxId: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -590,6 +706,77 @@ export interface ApiDistrictDistrict extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::subdistrict.subdistrict'
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiExecutiveCommitteeExecutiveCommittee
+  extends Struct.SingleTypeSchema {
+  collectionName: 'executive_committees';
+  info: {
+    description: 'Current foundation committee shown on the public site';
+    displayName: 'Executive Committee';
+    pluralName: 'executive-committees';
+    singularName: 'executive-committee';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    appointedDate: Schema.Attribute.Date;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::executive-committee.executive-committee'
+    > &
+      Schema.Attribute.Private;
+    members: Schema.Attribute.Component<'shared.member', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
+  collectionName: 'home_pages';
+  info: {
+    description: 'Content of the public site home page';
+    displayName: 'Home Page';
+    pluralName: 'home-pages';
+    singularName: 'home-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bannerAuthor: Schema.Attribute.String;
+    bannerAuthorTagline: Schema.Attribute.String;
+    bannerImage: Schema.Attribute.Media<'images'>;
+    bannerQuote: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaLabel: Schema.Attribute.String;
+    ctaLink: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/training'>;
+    headline: Schema.Attribute.Text & Schema.Attribute.Required;
+    heroImage: Schema.Attribute.Media<'images'>;
+    introMD: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-page.home-page'
+    > &
+      Schema.Attribute.Private;
+    missionLabel: Schema.Attribute.String;
+    missionText: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -790,6 +977,39 @@ export interface ApiSubdistrictSubdistrict extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserPreferenceUserPreference
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_preferences';
+  info: {
+    description: 'Per-user UI preferences for the admin app, keyed by Keycloak subject';
+    displayName: 'User Preference';
+    pluralName: 'user-preferences';
+    singularName: 'user-preference';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-preference.user-preference'
+    > &
+      Schema.Attribute.Private;
+    prefs: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -1050,12 +1270,13 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    alternativeText: Schema.Attribute.String;
-    caption: Schema.Attribute.String;
+    alternativeText: Schema.Attribute.Text;
+    caption: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ext: Schema.Attribute.String;
+    focalPoint: Schema.Attribute.JSON;
     folder: Schema.Attribute.Relation<'manyToOne', 'plugin::upload.folder'> &
       Schema.Attribute.Private;
     folderPath: Schema.Attribute.String &
@@ -1075,7 +1296,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     mime: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    previewUrl: Schema.Attribute.String;
+    previewUrl: Schema.Attribute.Text;
     provider: Schema.Attribute.String & Schema.Attribute.Required;
     provider_metadata: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
@@ -1084,7 +1305,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
     width: Schema.Attribute.Integer;
   };
 }
@@ -1295,7 +1516,7 @@ export interface PluginUsersPermissionsUser
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;
@@ -1305,15 +1526,21 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about-page.about-page': ApiAboutPageAboutPage;
+      'api::activities-page.activities-page': ApiActivitiesPageActivitiesPage;
       'api::address.address': ApiAddressAddress;
+      'api::contact-page.contact-page': ApiContactPageContactPage;
       'api::course-info.course-info': ApiCourseInfoCourseInfo;
       'api::course.course': ApiCourseCourse;
       'api::district.district': ApiDistrictDistrict;
+      'api::executive-committee.executive-committee': ApiExecutiveCommitteeExecutiveCommittee;
+      'api::home-page.home-page': ApiHomePageHomePage;
       'api::instructor.instructor': ApiInstructorInstructor;
       'api::province.province': ApiProvinceProvince;
       'api::registration.registration': ApiRegistrationRegistration;
       'api::report-template.report-template': ApiReportTemplateReportTemplate;
       'api::subdistrict.subdistrict': ApiSubdistrictSubdistrict;
+      'api::user-preference.user-preference': ApiUserPreferenceUserPreference;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

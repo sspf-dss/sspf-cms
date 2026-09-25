@@ -28,6 +28,7 @@
     "firebase-admin": "^14.5.0",
     "googleapis": "^150.0.1",
     "handlebars": "^4.7.8",
+    "jose": "^6.2.12",
     "lodash": "^4.17.21",
     "mysql2": "3.24.4",
     "nodemailer": "^10.0.10",

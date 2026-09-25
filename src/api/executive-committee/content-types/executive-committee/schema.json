@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "executive_committees",
+  "info": {
+    "singularName": "executive-committee",
+    "pluralName": "executive-committees",
+    "displayName": "Executive Committee",
+    "description": "Current foundation committee shown on the public site"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "appointedDate": { "type": "date" },
+    "members": { "type": "component", "repeatable": true, "component": "shared.member" }
+  }
+}

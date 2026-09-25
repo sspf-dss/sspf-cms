@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_contact_people",
+  "info": {
+    "displayName": "Contact Person",
+    "icon": "phone",
+    "description": "Named contact with role, email and phone"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    }
+  }
+}

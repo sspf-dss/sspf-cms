@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_members",
+  "info": {
+    "displayName": "Member",
+    "icon": "user",
+    "description": "Committee member; list order is the display order"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "position": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

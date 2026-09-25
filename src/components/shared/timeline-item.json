@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_timeline_items",
+  "info": {
+    "displayName": "Timeline Item",
+    "icon": "clock",
+    "description": "Milestone shown on the about page"
+  },
+  "options": {},
+  "attributes": {
+    "date": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "Content of the public site about-us page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "text", "required": true },
+    "bodyMD": { "type": "richtext" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "timeline": { "type": "component", "repeatable": true, "component": "shared.timeline-item" },
+    "ctaTitle": { "type": "string" },
+    "ctaBodyMD": { "type": "richtext" }
+  }
+}

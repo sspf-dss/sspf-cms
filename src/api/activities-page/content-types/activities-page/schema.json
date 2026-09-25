@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "activities_pages",
+  "info": {
+    "singularName": "activities-page",
+    "pluralName": "activities-pages",
+    "displayName": "Activities Page",
+    "description": "Content of the public site activities page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "eyebrow": { "type": "string" },
+    "title": { "type": "text", "required": true },
+    "intro": { "type": "text" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.feature" }
+  }
+}

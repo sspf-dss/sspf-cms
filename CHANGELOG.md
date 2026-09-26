@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/compare/v0.4.0...v0.5.0) (2026-09-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node.js >= 22.12 is now required (puppeteer 25, firebase-admin 14).
+
+### Features
+
+* **docker:** add Dockerfile and docker-compose for strapi + mysql ([4a5cc94](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/4a5cc943ae5b6e025551b5df113f8100fd92cef3))
+* **keycloak:** add token exchange and per-user preferences ([591120c](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/591120c0185a5f80bed5a602603644d9b6d7d2ca))
+* **pages:** add CMS-managed static pages for the public site ([12f30d9](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/12f30d9be460ca62c18245cd01fedf8f9bc76660))
+* **pdf:** implement PDF generation for registration certificates ([06e26f9](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/06e26f9d739971855ebf101fd29bdfc12e8fcef6))
+
+
+### Bug Fixes
+
+* update strapi to 5.54.0 ([43d2153](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/43d2153d6cd3aed43a23094a1d9c41779a5f0ee2))
+* update strapi to 5.55.1 and resolve npm audit advisories ([71650ad](https://gitlab.pod23.dss.go.th/sspf/sspf-cms/commit/71650ad74b0a97bdc3367cbbd890de446724b64c))
+
 ## [0.4.0](https://github.com/sspf-dss/sspf-cms/compare/v0.3.0...v0.4.0) (2025-12-12)
 
 
